@@ -25,6 +25,9 @@
 (defn- nb-frame [fps duration]
   (* fps duration))
 
+(defn- printable-context [context]
+  (assoc context :anim-fns nil))
+
 (defn new-context [config program]
   (let [sz (get config :sz DEFAULT_SZ)
         animDuration (get config :anim-duration-seconds DEFAULT_ANIM_DURATION)
@@ -44,28 +47,22 @@
                  :anim           nbFrameForAnimation
                  :anim-fn        identity
                  :anim-fns       program}]
-    (println "Initial context" context)
+    (println "Initial context" (printable-context context))
     context))
 
 ;;
-
-(defn clamp-angle [angle]
-  (cond
-    (< TWO_PI angle) (- angle TWO_PI)
-    (> 0 angle) (+ angle TWO_PI)
-    true angle))
 
 (defn turn-left [state]
   (let [ang (:angle state)
         delta (:anim-rot-delta state)]
     (-> state
-        (assoc :angle (clamp-angle (- ang delta))))))
+        (assoc :angle (- ang delta)))))
 
 (defn turn-right [state]
   (let [ang (:angle state)
         delta (:anim-rot-delta state)]
     (-> state
-        (assoc :angle (clamp-angle (+ ang delta))))))
+        (assoc :angle (+ ang delta)))))
 
 (defn move [state]
   (let [x (:x state)
@@ -79,7 +76,6 @@
         (assoc :y (+ y dy)))))
 
 (defn update-state [state]
-  (println "update-state" state)
   (let [anim (:anim state)
         anim-max (:anim-nb-frame state)]
     (if (< anim anim-max)
@@ -89,10 +85,8 @@
       (let [fns (:anim-fns state)
             nfn (first fns)
             nfnf (if (nil? nfn) identity nfn)
-            nfns (rest fns)
-            nst (-> state
-                    (assoc :anim-fn nfnf)
-                    (assoc :anim-fns nfns)
-                    (assoc :anim 0))]
-        (println "state changed" nst)
-        nst))))
+            nfns (rest fns)]
+        (-> state
+            (assoc :anim-fn nfnf)
+            (assoc :anim-fns nfns)
+            (assoc :anim 0))))))

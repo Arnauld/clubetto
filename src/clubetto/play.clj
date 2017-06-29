@@ -4,8 +4,26 @@
             [clubetto.core :as c]
             [clubetto.draw :as d]))
 
-(def my-program [c/move, c/turn-left, c/move, c/turn-right, c/move, c/move])
-(def config {:cx 1, :cy 1})
+(def my-program (cycle [c/move,
+                        c/turn-left,
+                        c/move,
+                        c/turn-right,
+                        c/move,
+                        c/move,
+                        c/turn-left,
+                        c/move,
+                        c/turn-left,
+                        c/move,
+                        c/move,
+                        c/turn-left,
+                        c/move,
+                        c/move, c/move,
+                        c/turn-right,
+                        c/move,
+                        c/turn-right,
+                        c/move,
+                        c/turn-right]))
+(def config {:cx 1, :cy 1, :anim-duration-seconds 1, :fps 10})
 
 
 
