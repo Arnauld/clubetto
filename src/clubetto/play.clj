@@ -41,7 +41,7 @@
 
 (q/defsketch
   clubetto
-  :title "You spin my circle right round"
+  :title "Clubetto"
   :size [sketch-sz sketch-sz]
   ; setup function called only once, during sketch initialization.
   :setup setup

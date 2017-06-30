@@ -2,18 +2,12 @@
 
 (def PI Math/PI)
 (def HALF_PI (/ Math/PI 2))
-(def TWO_PI (* Math/PI 2))
-
-(def NORTH :north)
-(def EAST :east)
-(def SOUTH :south)
-(def WEST :west)
 
 (def initial-rad-by-dir
-  {NORTH PI,
-   WEST  HALF_PI,
-   SOUTH 0,
-   EAST  (+ PI HALF_PI)})
+  {:north PI,
+   :west  HALF_PI,
+   :south 0,
+   :east  (+ PI HALF_PI)})
 
 (def DEFAULT_FPS 30)
 (def DEFAULT_ANIM_DURATION 2)
@@ -34,7 +28,7 @@
         fps (get config :fps DEFAULT_FPS)
         x (get config :cx 1)
         y (get config :cy 1)
-        direction (get config :direction SOUTH)
+        direction (get config :direction :south)
         nbFrameForAnimation (nb-frame fps animDuration)
         context {:sz             sz
                  :fps            fps
